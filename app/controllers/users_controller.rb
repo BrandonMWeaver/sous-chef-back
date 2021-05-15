@@ -7,6 +7,7 @@ class UsersController < ApplicationController
         user = User.new(username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation])
 
         if user.save
+            session[:user_id] = user.id
             render json: user, except: [:password_digest, :password_confirmation, :created_at, :updated_at]
         else
             render json: { errors: user.errors.full_messages }
